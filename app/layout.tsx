@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/layout/Navbar";
 import { SITE } from "@/lib/constants";
 import "./globals.css";
+import AnimatedBackground from "@/components/background/AnimatedBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -87,10 +88,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrains.variable} ${notoDev.variable}`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrains.variable} ${notoDev.variable}dark`}
     >
       <body className="min-h-screen font-sans">
         <Providers>
+        <AnimatedBackground />
           <a
             href="#main"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"

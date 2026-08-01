@@ -268,15 +268,15 @@ export function Contact() {
           </Reveal>
         </div>
 
+      </div>
         {/* Footer */}
         <Reveal>
-          <div className="mt-20 flex flex-col items-center justify-center gap-4 border-t border-border pt-8 text-center text-xs text-muted-foreground sm:flex-row sm:text-left">
+          <div className="footer-margin footer-padding flex flex-col items-center justify-center gap-4 border-t border-border text-center text-xs text-muted-foreground sm:flex-row sm:text-left">
             <span className="max-w-md">
               © <CurrentYear /> {SITE.name} · {SITE.location}
             </span>
           </div>
         </Reveal>
-      </div>
     </section>
   );
 }

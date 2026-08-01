@@ -24,6 +24,16 @@
     --input: 240 4% 16%;
     --ring: 217 91% 60%;
     --radius: 0.75rem;
+    /* Base */
+    --bg-base: #050508;
+
+    /* Aurora colors – tweak freely */
+    --aurora-1: rgba(99, 102, 241, 0.45); /* indigo */
+    --aurora-2: rgba(168, 85, 247, 0.4); /* purple */
+    --aurora-3: rgba(236, 72, 153, 0.35); /* pink */
+
+    /* Mouse glow */
+    --glow-color: rgba(139, 92, 246, 0.55);
   }
 
   .light {
@@ -46,6 +56,11 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 217 91% 50%;
+    --bg-base: #f8fafc;
+    --aurora-1: rgba(99, 102, 241, 0.18);
+    --aurora-2: rgba(168, 85, 247, 0.15);
+    --aurora-3: rgba(236, 72, 153, 0.12);
+    --glow-color: rgba(99, 102, 241, 0.25);
   }
 
   * {
@@ -107,29 +122,19 @@
   }
 
   .gradient-text {
-    background-image: linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)));
+    background-image: linear-gradient(
+      to right,
+      hsl(var(--primary)),
+      hsl(var(--secondary))
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .section-padding {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
-  @media (min-width: 768px) {
-    .section-padding {
-      padding-top: 7rem;
-      padding-bottom: 7rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .section-padding {
-      padding-top: 8rem;
-      padding-bottom: 8rem;
-    }
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .container-narrow {
@@ -140,17 +145,49 @@
     padding-right: 1.25rem;
   }
 
+  @media (min-width: 320px) {
+    .ffoter-padding {
+      padding-top: 2rem;
+    }
+    
+    .footer-margin {
+      margin-top: 2rem;
+    }
+  }
+
   @media (min-width: 640px) {
+    .footer-padding {
+      padding-top: 4rem;
+    }
+
+    .footer-margin {
+      margin-top: 4rem;
+    }
+
     .container-narrow {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
+
+    .section-padding {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
   }
 
   @media (min-width: 1024px) {
+    .footer-padding {
+      padding-top: 5rem;
+    }
+
     .container-narrow {
       padding-left: 2rem;
       padding-right: 2rem;
+    }
+
+    .section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
     }
   }
 }

@@ -63,7 +63,7 @@ export function Hero() {
 
   return (
     <section id="hero" className="relative overflow-hidden border-b border-border">
-      {/* Background effects */}
+      {/* Background effects
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -right-32 -top-32 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[100px]" />
         <div className="absolute -bottom-40 -left-20 h-[360px] w-[360px] rounded-full bg-secondary/10 blur-[100px]" />
@@ -76,7 +76,7 @@ export function Hero() {
             />
           </>
         )}
-      </div>
+      </div> */}
 
       <div className="container-narrow relative grid items-center gap-12 py-20 md:gap-16 md:py-28 lg:grid-cols-[1.35fr_0.65fr] lg:py-32">
         {/* Left content */}
