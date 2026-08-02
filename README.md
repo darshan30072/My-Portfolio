@@ -40,8 +40,18 @@ components/
 
 lib/
   constants.ts        # All content (easy to edit)
-  utils.ts            # cn() helper
+  utils.ts             # cn() helper
+  ai/                  # RAG pipeline: config, provider, retriever, prompts, actions
+  actions/             # Client-side scroll/download/copy/open-link helpers
+  security/            # Rate limiting + request validation
+
+components/ai/         # Floating AI Portfolio Assistant widget
+hooks/                 # useOllamaHealth, usePortfolioActions
+data/knowledge/        # Markdown knowledge base the assistant answers from
+scripts/                # npm run kb:embed — generates data/knowledge/embeddings.json
 ```
+
+See **[SETUP-CHATBOT.md](./SETUP-CHATBOT.md)** for the AI assistant's setup, architecture, and how to edit its knowledge base.
 
 ## Customization
 
@@ -73,6 +83,13 @@ Without `RESEND_API_KEY`, messages are validated and logged to the server consol
 
 On Vercel, add the same variables under Project Settings → Environment Variables.
 
+## AI Portfolio Assistant
+
+A RAG-powered chat widget (bottom-right) that answers recruiter questions from `data/knowledge/*.md`,
+runs on your own local Ollama models, and can navigate the page (scroll to a section, download the
+resume, copy contact info). Full setup — installing Ollama, pulling models, generating embeddings,
+env vars — is in **[SETUP-CHATBOT.md](./SETUP-CHATBOT.md)**.
+
 ## Design Highlights
 
 - Dark theme by default with vibrant blue/violet accents
@@ -88,4 +105,8 @@ On Vercel, add the same variables under Project Settings → Environment Variabl
 npm run build
 ```
 
-Deploy to Vercel for best performance (Image Optimization, Edge Network).
+Deploy to Vercel for best performance (Image Optimization, Edge Network) — **except the AI
+assistant**, which depends on a locally-running Ollama server and won't work on Vercel or other
+serverless hosting. Run `next build && next start` on a machine (VPS or your own computer) that
+also runs `ollama serve`, or point `OLLAMA_BASE_URL` at a tunnelled Ollama instance. See
+[SETUP-CHATBOT.md](./SETUP-CHATBOT.md).

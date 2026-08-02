@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { SITE } from "@/lib/constants";
 import "./globals.css";
 import AnimatedBackground from "@/components/background/AnimatedBackground";
+import { ChatWidget } from "@/components/ai/ChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -88,7 +89,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrains.variable} ${notoDev.variable}dark`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrains.variable} ${notoDev.variable} dark`}
     >
       <body className="min-h-screen font-sans">
         <Providers>
@@ -101,7 +102,7 @@ export default function RootLayout({
           </a>
           <Navbar />
           <main id="main">{children}</main>
-          
+          <ChatWidget />
         </Providers>
       </body>
     </html>
