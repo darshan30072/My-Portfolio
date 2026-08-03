@@ -59,6 +59,14 @@ export const metadata: Metadata = {
     title: SITE.title,
     description: SITE.description,
     siteName: SITE.name,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} — Portfolio`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -93,7 +101,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen font-sans">
         <Providers>
-        <AnimatedBackground />
+          <AnimatedBackground />
           <a
             href="#main"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"

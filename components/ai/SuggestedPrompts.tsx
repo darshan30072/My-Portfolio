@@ -2,11 +2,9 @@ import { SITE } from "@/lib/constants";
 
 const PROMPTS = [
   "Tell me about yourself",
-  "What are your strongest projects?",
   "Why should we hire you?",
   "What technologies do you know?",
   "What AI projects have you built?",
-  "Tell me about the Pushtimarg project",
   "Show contact information",
 ];
 

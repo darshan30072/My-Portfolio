@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
+import { splitProjects } from "@/lib/projects";
 import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { cn } from "@/lib/utils";
 
-function  ProjectCard({
+function ProjectCard({
   project,
   featured = false,
 }: {
@@ -40,6 +41,7 @@ function  ProjectCard({
           src={project.image}
           alt={project.title}
           fill
+          unoptimized={project.image.endsWith(".gif")}
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           sizes={featured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
         />
@@ -137,8 +139,7 @@ function  ProjectCard({
 }
 
 export function Projects() {
-  const featured = PROJECTS.find((p) => p.featured);
-  const others = PROJECTS.filter((p) => !p.featured);
+  const { featuredProjects, otherProjects } = splitProjects(PROJECTS);
 
   return (
     <section id="projects" className="section-padding border-b border-border">
@@ -155,14 +156,18 @@ export function Projects() {
         </Reveal>
 
         <div className="grid gap-5 md:grid-cols-2">
-          {featured && (
-            <Reveal className="md:col-span-2">
-              <ProjectCard project={featured} featured />
-            </Reveal>
+          {featuredProjects.length > 0 && (
+            <div className="contents">
+              {featuredProjects.map((project) => (
+                <Reveal key={project.id} className="md:col-span-2">
+                  <ProjectCard project={project} featured />
+                </Reveal>
+              ))}
+            </div>
           )}
 
           <Stagger className="contents">
-            {others.map((project) => (
+            {otherProjects.map((project) => (
               <StaggerItem key={project.id}>
                 <ProjectCard project={project} />
               </StaggerItem>

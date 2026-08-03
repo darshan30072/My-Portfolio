@@ -60,7 +60,7 @@ export const PROJECTS = [
       "Solo-built restaurant operations dashboard — 14 components and 17 custom hooks in an MVVM pattern to manage, track, and report on food items, orders, and categories across 13 pages.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "REST APIs"],
     liveUrl: null,
-    githubUrl: null,
+    githubUrl: "https://github.com/darshan30072/fop-admin.git",
     image: "/images/projects/fop.webp",
     metrics: ["14 components", "17 hooks", "13 pages"],
   },
@@ -73,9 +73,22 @@ export const PROJECTS = [
       "Offline AI chatbot integrating Ollama with 4 swappable open-source LLMs (Llama 3.2, Mistral, Gemma, DeepSeek-R1). Persistent multi-turn history and real-time token streaming — zero API cost.",
     tags: ["Python", "Streamlit", "Ollama", "LLMs"],
     liveUrl: null,
-    githubUrl: null,
+    githubUrl: "https://github.com/darshan30072/AI_Chatbot.git",
     image: "/images/projects/ai-chatbot.webp",
     metrics: ["4 models", "Fully offline", "Streaming"],
+  },
+  {
+    id: "3",
+    title: "AI Portfolio Assistant",
+    kind: "AI Tool",
+    featured: true,
+    description:
+      "A RAG-powered chat assistant embedded in this site — retrieves from a real knowledge base via local Ollama embeddings, streams grounded answers, and can navigate the page (scroll, download resume, copy contact info) through a closed action-token grammar. Runs entirely on self-hosted local LLMs, zero API cost.",
+    tags: ["Next.js", "TypeScript", "RAG", "Ollama", "Vercel AI SDK"],
+    liveUrl: null,
+    githubUrl: "https://github.com/darshan30072/My-Portfolio.git",
+    image: "/images/projects/ai-portfolio-assistant.gif",
+    metrics: ["RAG pipeline", "Streaming responses", "Portfolio actions"],
   },
 ] as const;
 
@@ -158,7 +171,7 @@ export const EDUCATION = [
   {
     degree: "Diploma in Information Technology",
     school: "Dr. S. & S. S. Ghandhy College of Engg. & Tech., Surat",
-    period: "Jun 2018 – Jul 2021",
+    period: "Jun 2018 – May 2021",
   },
 ] as const;
 

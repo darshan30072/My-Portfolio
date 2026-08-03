@@ -56,12 +56,14 @@ const components: Components = {
 
 export function MarkdownContent({ content }: { content: string }) {
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeSanitize]}
-      components={components}
-    >
-      {content}
-    </ReactMarkdown>
+    <div className="max-w-full overflow-x-hidden break-words leading-relaxed">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeSanitize]}
+        components={components}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   );
 }

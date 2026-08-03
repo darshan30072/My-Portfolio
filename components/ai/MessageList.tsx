@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import type { UIMessage } from "ai";
 import { ChatMessage } from "./ChatMessage";
 import { SuggestedPrompts } from "./SuggestedPrompts";
@@ -28,15 +28,20 @@ export function MessageList({
     stickToBottom.current = distanceFromBottom < 80;
   }
 
-  useEffect(() => {
-    if (stickToBottom.current) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
+  useLayoutEffect(() => {
+    if (!stickToBottom.current) return;
+
+    const container = containerRef.current;
+    const target = bottomRef.current;
+
+    if (!container || !target) return;
+
+    target.scrollIntoView({ behavior: "auto", block: "end" });
   }, [messages, status]);
 
   if (messages.length === 0) {
     return (
-      <div className="flex-1 overflow-y-auto px-3.5 py-3">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden px-3.5 py-3 [scrollbar-gutter:stable]">
         <SuggestedPrompts onSelect={onSuggestedSelect} />
       </div>
     );
@@ -53,7 +58,7 @@ export function MessageList({
     <div
       ref={containerRef}
       onScroll={handleScroll}
-      className="flex-1 space-y-3 overflow-y-auto px-3.5 py-3"
+      className="flex-1 space-y-3 overflow-y-auto overflow-x-hidden px-3.5 py-3 [scrollbar-gutter:stable]"
     >
       {messages.map((message) => (
         <ChatMessage key={message.id} message={message} />

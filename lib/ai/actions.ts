@@ -50,6 +50,20 @@ const VALID_IDS = new Set<string>(ACTION_CATALOG.map((a) => a.id));
 // known id is still stripped from the visible text, just never executed.
 const ACTION_TOKEN_RE = /\[\[action:([a-zA-Z]+:[a-zA-Z]+)\]\]/g;
 
+const SECTION_INTENT_PATTERNS: Array<{ action: ActionId; regex: RegExp }> = [
+  { action: "scroll:about", regex: /\b(about|bio|who you are|introduction|overview)\b/i },
+  { action: "scroll:projects", regex: /\b(projects?|portfolio|work samples|case studies|featured work)\b/i },
+  { action: "scroll:experience", regex: /\b(experience|work history|career|journey|resume)\b/i },
+  { action: "scroll:skills", regex: /\b(skills?|technologies?|tech stack|toolset|expertise|tools?)\b/i },
+  { action: "scroll:contact", regex: /\b(contact(?:\s+(?:information|details|info|section))?|get in touch|reach out|reach me|contact me)\b/i },
+];
+
+const SECTION_DETAIL_PATTERNS: Array<{ action: ActionId; regex: RegExp }> = [
+  { action: "scroll:contact", regex: /(?:^|\n)\s*(?:[-*•]|\u2022|\d+\.)?\s*(email|phone|location|linkedin|github)\s*:/i },
+  { action: "scroll:projects", regex: /(?:^|\n)\s*(?:[-*•]|\u2022|\d+\.)?\s*(project|portfolio|case study)\s*:/i },
+  { action: "scroll:skills", regex: /(?:^|\n)\s*(?:[-*•]|\u2022|\d+\.)?\s*(skill|technology|tool|stack)\s*:/i },
+];
+
 export function parseActions(text: string): {
   cleanText: string;
   actions: ActionId[];
@@ -64,6 +78,18 @@ export function parseActions(text: string): {
     .replace(/[ \t]+\n/g, "\n") // trim trailing spaces left behind on a line
     .replace(/\n{3,}/g, "\n\n") // collapse blank lines left behind
     .trim();
+
+  for (const { action, regex } of SECTION_INTENT_PATTERNS) {
+    if (regex.test(cleanText)) {
+      found.push(action);
+    }
+  }
+
+  for (const { action, regex } of SECTION_DETAIL_PATTERNS) {
+    if (regex.test(cleanText)) {
+      found.push(action);
+    }
+  }
 
   return { cleanText, actions: Array.from(new Set(found)) };
 }
