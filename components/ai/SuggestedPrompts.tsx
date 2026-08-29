@@ -1,4 +1,4 @@
-import { SITE } from "@/lib/constants";
+﻿import { SITE } from "@/lib/constants";
 
 const PROMPTS = [
   "Tell me about yourself",
@@ -13,10 +13,10 @@ export function SuggestedPrompts({ onSelect }: { onSelect: (prompt: string) => v
     <div className="flex h-full flex-col justify-end gap-4 px-1 pb-1">
       <div>
         <p className="font-display text-sm font-semibold text-foreground">
-          Hi, I'm {SITE.name}'s portfolio assistant 👋
+          Hi, I&apos;m {SITE.name}&apos;s portfolio assistant ðŸ‘‹
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
-          Ask me about his experience, projects, skills, or resume — I only answer from his
+          Ask me about his experience, projects, skills, or resume â€” I only answer from his
           actual portfolio, so you can trust what you get.
         </p>
       </div>
