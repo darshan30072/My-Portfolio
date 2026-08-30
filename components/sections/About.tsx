@@ -6,16 +6,16 @@ import { Badge } from "@/components/ui/badge";
 
 const FOCUS_AREAS = [
   {
-    title: "Frontend Engineering",
-    desc: "React.js, Next.js, TypeScript, Tailwind",
+    title: "Software Engineering",
+    desc: "React.js, Next.js, TypeScript, REST APIs",
   },
   {
     title: "Full-Stack Systems",
-    desc: "PHP, WordPress, ASP.NET Core, MySQL",
+    desc: "Node.js, PHP, WordPress, ASP.NET Core",
   },
   {
     title: "AI & Automation",
-    desc: "Local LLMs, RAG fundamentals, data pipelines",
+    desc: "Docker, CI/CD, Cloudflare, Ollama, RAG",
   },
 ];
 
@@ -29,7 +29,7 @@ export function About() {
               About
             </p>
             <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-              Frontend-first, full-stack in practice
+              Software engineering across product, infrastructure, and AI
             </h2>
           </div>
         </Reveal>
@@ -39,24 +39,23 @@ export function About() {
             <div className="space-y-4 text-[15px] leading-relaxed text-muted-foreground md:text-base">
               <p>
                 <strong className="font-semibold text-foreground">
-                  I&apos;m a frontend developer
+                  I&apos;m a software engineer
                 </strong>{" "}
-                with professional experience building scalable React.js and
-                Next.js applications, alongside full-stack development using
-                PHP, MySQL, WordPress custom plugins and themes, and ASP.NET
-                Core.
+                with professional experience building scalable React.js and Next.js
+                applications, full-stack systems, WordPress platforms, and production
+                DevOps workflows.
               </p>
               <p>
-                At Wappzo Infotech I progressed from intern to Associate
-                Software Engineer, architecting REST APIs, multilingual systems,
-                and authentication workflows — including a from-scratch
-                English/Hindi translation engine (the same one powering the
-                animation in the hero).
+                At Wappzo Infotech I progressed from intern to Trainee and Associate
+                Engineer, building reusable React.js interfaces, REST API integrations,
+                and 13 custom WordPress plugins with multilingual, LMS, polling, and
+                OAuth capabilities.
               </p>
               <p>
-                I&apos;m currently expanding into{" "}
+                I also work hands-on with{" "}
                 <strong className="font-semibold text-foreground">
-                  AI, Retrieval-Augmented Generation, and LLM integration
+                  DevOps and AI engineering, including CI/CD, Docker, Cloudflare,
+                  Retrieval-Augmented Generation, local LLMs, and vector embeddings
                 </strong>
                 , with hands-on experience running local models and building
                 automated data pipelines.

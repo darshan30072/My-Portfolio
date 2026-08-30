@@ -65,7 +65,7 @@ function ProjectCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-                aria-label={`Live demo of ${project.title}`}
+                aria-label={`Live URL of ${project.title}`}
               >
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
@@ -118,7 +118,7 @@ function ProjectCard({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
               >
-                Live Demo <ArrowUpRight className="h-3.5 w-3.5" />
+                Live URL <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             )}
             {project.githubUrl && (

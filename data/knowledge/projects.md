@@ -1,28 +1,30 @@
 # Projects
 
+## FOP Admin — Food Ordering Platform Admin Dashboard
+A production food ordering admin dashboard built with Next.js and TypeScript. The project uses
+an automated GitHub Actions CI/CD pipeline with self-hosted Linux runners, Docker Compose for
+the multi-service stack, Cloudflare Tunnel for zero-exposed-port access, Nginx for reverse
+proxy routing, SSL/TLS certificates, UFW firewall hardening, MongoDB, and Cloudinary.
+- Designed and debugged CI/CD workflows, including npm cache errors, cross-platform lockfile
+  conflicts, and VM clock drift authentication failures.
+- Containerized Node.js/Express, Next.js, and MongoDB services with Docker Compose.
+- Migrated reverse proxy routing to native Nginx for seamless zero-downtime routing.
+Tags: Next.js, TypeScript, Docker, GitHub Actions, Nginx, Cloudflare Tunnel, MongoDB, Cloudinary.
+Live URL: https://fop-admin.darshantech.online
+
+## My Portfolio — AI-Powered Personal Website
+An AI-powered personal website with a production RAG pipeline using Markdown chunking, local
+vector embeddings, cosine similarity, and self-hosted Ollama LLMs.
+- Engineered a streaming chat UI with Next.js and Vercel AI SDK.
+- Implemented closed action-token navigation, rate limiting, and sanitized rendering.
+- Automated CI/CD deployment to Vercel using GitHub Actions with lint-gated builds and
+  branch-based production/preview releases.
+- Uses a Cloudflare-managed subdomain with automatic SSL.
+Tags: Next.js, TypeScript, RAG, Ollama, Vercel AI SDK.
+Live URL: https://my-portfolio.darshantech.online
+
 ## Pushtimarg Web Application
-A scalable WordPress platform built from 13+ custom plugins and a custom theme. Features a
-from-scratch English/Hindi multilingual system, an LMS with quizzes and progress tracking,
-OAuth login (Google, Facebook, Microsoft), and REST API integrations. This is Darshan's
-largest and most featured production project, built at Wappzo Infotech.
-Tags: WordPress, PHP, MySQL, REST APIs, OAuth.
-Live: https://pushtimarg.wappzo.com
-Metrics: 13+ plugins, custom theme, EN/HI translation engine.
-
-## FOP Admin Dashboard (Food Ordering Platform)
-A restaurant operations dashboard built solo by Darshan — 14 components and 17 custom hooks
-built in an MVVM pattern, used to manage, track, and report on food items, orders, and
-categories across 13 pages.
-Tags: Next.js, TypeScript, Tailwind CSS, REST APIs.
-Metrics: 14 components, 17 custom hooks, 13 pages.
-
-## Local AI Chatbot
-An offline AI chatbot integrating Ollama with 4 swappable open-source LLMs: Llama 3.2, Mistral,
-Gemma, and DeepSeek-R1. Supports persistent multi-turn conversation history and real-time
-token streaming, running entirely locally with zero API cost.
-Tags: Python, Streamlit, Ollama, LLMs.
-Metrics: 4 models, fully offline, streaming responses.
-
-Note: this portfolio's own AI assistant (the chat widget you're using right now) is a separate,
-newer project — a Next.js/TypeScript RAG-based assistant also powered by local Ollama models,
-built specifically to help recruiters navigate this portfolio.
+A scalable WordPress platform featuring 13+ custom plugins and a custom theme, with an
+English/Hindi translation system, LMS module, polling system, OAuth integrations, and REST APIs.
+Tags: WordPress, PHP, MySQL, JavaScript, REST APIs.
+Live URL: https://pushtimarg.wappzo.com

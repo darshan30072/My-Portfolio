@@ -120,9 +120,9 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.24 }}
             className="mt-6 max-w-[52ch] text-base leading-relaxed text-muted-foreground md:text-[17px]"
           >
-            I build scalable React.js and Next.js applications, full-stack
-            systems with PHP, MySQL and ASP.NET Core, and — lately — local AI
-            tools with RAG and LLMs.
+            I build production software across full-stack development, DevOps, and AI —
+            from React.js and Next.js applications to containerized CI/CD systems
+            and local RAG solutions.
           </motion.p>
 
           <motion.div
@@ -193,7 +193,7 @@ export function Hero() {
               Darshan Tandel
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Frontend Developer
+              Software Engineer
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-2.5 text-left">
