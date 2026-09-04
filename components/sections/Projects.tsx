@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "@/lib/constants";
-import { splitProjects } from "@/lib/projects";
 import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
@@ -11,39 +10,33 @@ import { cn } from "@/lib/utils";
 
 function ProjectCard({
   project,
-  featured = false,
 }: {
   project: (typeof PROJECTS)[number];
-  featured?: boolean;
 }) {
   return (
     <article
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300",
-        "hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5",
-        featured && "md:col-span-2 md:grid md:grid-cols-2 md:gap-0"
+        "hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
       )}
     >
       {/* Image area */}
-      <div
-        className={cn(
-          "relative overflow-hidden bg-muted",
-          featured ? "aspect-[16/10] md:aspect-auto md:min-h-[320px]" : "aspect-[16/10]"
-        )}
-      >
+      <div className="relative aspect-[16/9] overflow-hidden bg-muted w-full">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/20" />
+
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-display text-4xl font-bold text-foreground/10 select-none">
+          <span className="select-none font-display text-4xl font-bold text-foreground/10">
             {project.title.charAt(0)}
           </span>
         </div>
+
         <Image
           src={project.image}
           alt={project.title}
           fill
           unoptimized={project.image.endsWith(".gif")}
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          sizes={featured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
+          sizes="100vw"
         />
       </div>
 
@@ -51,13 +44,18 @@ function ProjectCard({
       <div className="flex flex-1 flex-col p-6 md:p-7">
         <div className="mb-3 flex items-start justify-between gap-3">
           <div>
-            <Badge variant="outline" className="mb-2 font-mono text-[10px] uppercase tracking-wider">
+            <Badge
+              variant="outline"
+              className="mb-2 font-mono text-[10px] uppercase tracking-wider"
+            >
               {project.kind}
             </Badge>
+
             <h3 className="font-display text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
               {project.title}
             </h3>
           </div>
+
           <div className="flex shrink-0 gap-1.5 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             {project.liveUrl && (
               <a
@@ -70,6 +68,7 @@ function ProjectCard({
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
             )}
+
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -90,12 +89,12 @@ function ProjectCard({
 
         {project.metrics && (
           <div className="mb-4 flex flex-wrap gap-2">
-            {project.metrics.map((m) => (
+            {project.metrics.map((metric) => (
               <span
-                key={m}
+                key={metric}
                 className="rounded-full bg-muted px-2.5 py-0.5 font-mono text-[11px] text-muted-foreground"
               >
-                {m}
+                {metric}
               </span>
             ))}
           </div>
@@ -118,9 +117,11 @@ function ProjectCard({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-primary/80"
               >
-                Live URL <ArrowUpRight className="h-3.5 w-3.5" />
+                Live URL
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             )}
+
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -128,7 +129,8 @@ function ProjectCard({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
-                Source <Github className="h-3.5 w-3.5" />
+                Source
+                <Github className="h-3.5 w-3.5" />
               </a>
             )}
           </div>
@@ -139,8 +141,6 @@ function ProjectCard({
 }
 
 export function Projects() {
-  const { featuredProjects, otherProjects } = splitProjects(PROJECTS);
-
   return (
     <section id="projects" className="section-padding border-b border-border">
       <div className="container-narrow">
@@ -149,31 +149,20 @@ export function Projects() {
             <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
               Projects
             </p>
+
             <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
               Things I&apos;ve built
             </h2>
           </div>
         </Reveal>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          {featuredProjects.length > 0 && (
-            <div className="contents">
-              {featuredProjects.map((project) => (
-                <Reveal key={project.id} className="md:col-span-2">
-                  <ProjectCard project={project} featured />
-                </Reveal>
-              ))}
-            </div>
-          )}
-
-          <Stagger className="contents">
-            {otherProjects.map((project) => (
-              <StaggerItem key={project.id}>
-                <ProjectCard project={project} />
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
+        <Stagger className="flex flex-col gap-5">
+          {PROJECTS.map((project) => (
+            <StaggerItem key={project.id}>
+              <ProjectCard project={project} />
+            </StaggerItem>
+          ))}
+        </Stagger>
       </div>
     </section>
   );

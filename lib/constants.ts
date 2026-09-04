@@ -53,16 +53,15 @@ export const HERO_STATS = [
 export const PROJECTS: readonly Project[] = [
   {
     id: "0",
-    title: "FOP Admin — Food Ordering Platform Admin Dashboard",
-    kind: "Full-Stack Platform",
-    featured: true,
+    title: "Pushtimarg Web Application",
+    kind: "Web Platform",
+    featured: false,
     description:
-      "Production food ordering admin dashboard with an automated GitHub Actions CI/CD pipeline, self-hosted Linux runners, Docker Compose, Cloudflare Tunnel, Nginx, SSL/TLS, UFW hardening, MongoDB, and Cloudinary.",
-    tags: ["Next.js", "TypeScript", "Docker", "GitHub Actions", "Nginx", "Cloudflare", "MongoDB", "Cloudinary"],
-    liveUrl: "https://fop-admin.darshantech.online",
-    githubUrl: "https://github.com/darshan30072/fop-admin.git",
-    image: "/images/projects/fop.webp",
-    metrics: ["CI/CD pipeline", "Self-hosted runner", "Zero exposed ports"],
+      "Scalable WordPress platform featuring 13+ custom plugins and a custom theme, with an English/Hindi translation system, LMS module, polling system, OAuth integrations, and REST APIs.",
+    tags: ["WordPress", "PHP", "MySQL", "JavaScript", "REST APIs"],
+    liveUrl: "https://pushtimarg.wappzo.com",
+    image: "/images/projects/pushtimarg.webp",
+    metrics: ["13+ plugins", "Custom theme", "EN/HI engine"],
   },
   {
     id: "1",
@@ -79,15 +78,16 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     id: "2",
-    title: "Pushtimarg Web Application",
-    kind: "Web Platform",
-    featured: false,
+    title: "FOP Admin — Food Ordering Platform Admin Dashboard",
+    kind: "Full-Stack Platform",
+    featured: true,
     description:
-      "Scalable WordPress platform featuring 13+ custom plugins and a custom theme, with an English/Hindi translation system, LMS module, polling system, OAuth integrations, and REST APIs.",
-    tags: ["WordPress", "PHP", "MySQL", "JavaScript", "REST APIs"],
-    liveUrl: "https://pushtimarg.wappzo.com",
-    image: "/images/projects/pushtimarg.webp",
-    metrics: ["13+ plugins", "Custom theme", "EN/HI engine"],
+      "Production food ordering admin dashboard with an automated GitHub Actions CI/CD pipeline, self-hosted Linux runners, Docker Compose, Cloudflare Tunnel, Nginx, SSL/TLS, UFW hardening, MongoDB, and Cloudinary.",
+    tags: ["Next.js", "TypeScript", "Docker", "GitHub Actions", "Nginx", "Cloudflare", "MongoDB", "Cloudinary"],
+    liveUrl: "https://fop-admin.darshantech.online",
+    githubUrl: "https://github.com/darshan30072/fop-admin.git",
+    image: "/images/projects/fop.webp",
+    metrics: ["CI/CD pipeline", "Self-hosted runner", "Zero exposed ports"],
   },
 ] as const;
 
