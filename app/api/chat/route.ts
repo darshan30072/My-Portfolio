@@ -1,13 +1,8 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { ollama } from "@/lib/ai/provider";
-import { CONTEXT_WINDOW } from "@/lib/ai/config";
+import { google } from "@ai-sdk/google";
+import { GEMINI_MODEL, MAX_HISTORY_MESSAGES } from "@/lib/ai/config";
 import { retrieveRelevantChunks } from "@/lib/ai/retriever";
 import { buildSystemPrompt } from "@/lib/ai/prompts";
-import {
-  DEFAULT_CHAT_MODEL,
-  MAX_HISTORY_MESSAGES,
-  isAllowedModel,
-} from "@/lib/ai/config";
 import { checkRateLimit, getClientKey } from "@/lib/security/rateLimit";
 import { chatRequestSchema } from "@/lib/security/validate";
 
@@ -52,8 +47,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { messages, model: requestedModel } = parsed.data;
-  const model = isAllowedModel(requestedModel) ? requestedModel : DEFAULT_CHAT_MODEL;
+  const { messages } = parsed.data;
 
   // Bound both the token cost and the prompt-injection surface of long histories.
   const trimmedMessages = messages.slice(-MAX_HISTORY_MESSAGES) as UIMessage[];
@@ -64,23 +58,18 @@ export async function POST(request: Request) {
 
   try {
     const result = streamText({
-  model: ollama(model),
-  system,
-  messages: await convertToModelMessages(trimmedMessages),
-  abortSignal: request.signal,
-  temperature: 0.4,
-  providerOptions: {
-    ollama: {
-      options: { num_ctx: CONTEXT_WINDOW },
-    },
-  },
-  onError({ error }) {
-    console.error("[api/chat] streamText error:", error);
-  },
-});
+      model: google(GEMINI_MODEL),
+      system,
+      messages: await convertToModelMessages(trimmedMessages),
+      abortSignal: request.signal,
+      temperature: 0.4,
+      onError({ error }) {
+        console.error("[api/chat] streamText error:", error);
+      },
+    });
     return result.toUIMessageStreamResponse({
       onError: () =>
-        "The AI assistant is unreachable right now — make sure Ollama is running, or reach out to Darshan directly.",
+        "The AI assistant is temporarily unavailable. Please try again shortly, or reach out to Darshan directly.",
     });
   } catch (err) {
     console.error("[api/chat] Unexpected error:", err);

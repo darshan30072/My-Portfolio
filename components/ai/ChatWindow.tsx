@@ -15,8 +15,6 @@ export function ChatWindow({
   status,
   hasError,
   online,
-  model,
-  onModelChange,
   inputValue,
   onInputChange,
   onSubmit,
@@ -31,8 +29,6 @@ export function ChatWindow({
   status: Status;
   hasError: boolean;
   online: boolean;
-  model: string;
-  onModelChange: (id: string) => void;
   inputValue: string;
   onInputChange: (value: string) => void;
   onSubmit: () => void;
@@ -56,8 +52,6 @@ export function ChatWindow({
     >
       <ChatHeader
         online={online}
-        model={model}
-        onModelChange={onModelChange}
         onClear={onClear}
         onClose={onClose}
         canClear={messages.length > 0}

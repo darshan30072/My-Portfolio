@@ -4,7 +4,12 @@ import { embed } from "ai";
 import { ollama } from "./provider";
 import { loadKnowledgeChunks } from "./knowledge/loadChunks";
 import { cosineSimilarity } from "./embeddings/similarity";
-import { EMBEDDING_MODEL, RETRIEVAL_MIN_SCORE, RETRIEVAL_TOP_K } from "./config";
+import {
+  EMBEDDING_MODEL,
+  RETRIEVAL_MIN_SCORE,
+  RETRIEVAL_TOP_K,
+  USE_OLLAMA_EMBEDDINGS,
+} from "./config";
 import type { EmbeddingsFile, KnowledgeChunk } from "./knowledge/types";
 
 const EMBEDDINGS_PATH = path.join(
@@ -65,7 +70,11 @@ export async function retrieveRelevantChunks(
   const allChunks = loadKnowledgeChunks();
   const embeddingsFile = loadEmbeddingsFile();
 
-  if (!embeddingsFile || embeddingsFile.model !== EMBEDDING_MODEL) {
+  if (
+    !USE_OLLAMA_EMBEDDINGS ||
+    !embeddingsFile ||
+    embeddingsFile.model !== EMBEDDING_MODEL
+  ) {
     return { chunks: keywordSearch(query, allChunks), usedVectorSearch: false };
   }
 

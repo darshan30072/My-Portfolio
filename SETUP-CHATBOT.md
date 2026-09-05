@@ -1,33 +1,94 @@
 # AI Portfolio Assistant — Setup Guide
 
 A RAG-powered chat widget that answers recruiter questions about Darshan using only his real
-portfolio data, running entirely on local Ollama models — no OpenAI/Anthropic API key, no
-per-message cost.
+portfolio data. Production chat uses Google's Gemini Flash API, so it works on Vercel without a
+local model server.
 
-## 1. Why this needs Ollama running locally
+## 1. Configure Gemini
 
-Ollama has no hosted/serverless mode — it's a server process that loads model weights into
-memory on whatever machine runs it. That means **this feature only works while Ollama is
-running somewhere reachable by the Next.js server.** Two ways to run it:
+Create a Gemini API key in Google AI Studio and add it to your local environment and Vercel:
 
-- **Everything on one machine (simplest).** Run `ollama serve` and `npm run start` (or `npm run
-  dev`) on the same computer — your laptop, or a VPS. `OLLAMA_BASE_URL` stays at the default
-  `http://127.0.0.1:11434/api`.
-- **Ollama elsewhere, site elsewhere.** Run Ollama on a machine you control, expose it through a
-  tunnel (Cloudflare Tunnel, Tailscale, ngrok, etc.), and point `OLLAMA_BASE_URL` in `.env.local`
-  at that URL. Add `OLLAMA_API_KEY` if your tunnel requires a bearer token.
+```bash
+GEMINI_API_KEY=your_google_ai_studio_key
+```
 
-**Vercel and other serverless hosts will not work** for this feature specifically — there's
-nowhere for Ollama to run. The rest of the site (static pages, `/api/contact`) is unaffected and
-can still deploy anywhere; only the chat widget depends on Ollama being reachable. The widget is
-built to fail gracefully: if it can't reach Ollama, it shows an "assistant offline" notice
-instead of breaking, so this never takes down the rest of the site for a recruiter visiting.
+In Vercel, add `GEMINI_API_KEY` under **Project Settings → Environment Variables** for Production,
+then redeploy. The key is used only by the server route and is never sent to the browser.
 
-## 2. One-time setup
+The default model is `gemini-2.5-flash`. To override it, add:
 
-1. **Install Ollama**: [ollama.com/download](https://ollama.com/download)
+```bash
+GEMINI_MODEL=gemini-2.5-flash
+```
 
-2. **Pull the models** you want available (at least one chat model + the embedding model):
+## 2. Local setup
+
+Install dependencies and run the app:
+
+```bash
+npm install
+npm run dev
+```
+
+The model label in the chat header is fixed to `Gemini Flash`; there is no Ollama selector in the
+production UI.
+
+## 3. Optional local Ollama embeddings
+
+Chat retrieval uses keyword search by default, so production does not require Ollama. For local
+experimentation, vector retrieval can be enabled with `USE_OLLAMA_EMBEDDINGS=true` and Ollama
+running at the configured `OLLAMA_BASE_URL`:
+
+```bash
+ollama pull nomic-embed-text
+ollama serve
+npm run kb:embed
+```
+
+Do not enable this option in Vercel unless the deployment can reach a real remote Ollama server.
+
+## 4. Updating what the assistant knows
+
+Everything the assistant can talk about lives in `data/knowledge/*.md` — plain markdown, split
+into chunks on `## ` headings. To change what it knows, edit the relevant file and redeploy.
+Keyword retrieval reads the markdown files directly, so no embedding regeneration is needed for
+the default Gemini deployment.
+
+## 5. How it works (architecture)
+
+```
+User question
+   │
+   ▼
+POST /api/chat  ──►  rate limit + validate (lib/security/)
+   │
+   ▼
+Keyword retrieval over data/knowledge/*.md
+   │
+   ▼
+Build system prompt: persona + strict "answer only from this context" rules
+  + the retrieved chunks + the action-token grammar (lib/ai/prompts.ts)
+   │
+   ▼
+streamText() to Gemini Flash via @ai-sdk/google → streamed back to the browser
+   │
+   ▼
+Client strips any [[action:...]] tokens from the reply and executes them
+```
+
+Everything is server-rendered/streamed through the Next.js Route Handler at `app/api/chat/route.ts`.
+
+## 6. Legacy Ollama notes
+
+The Ollama provider and embedding script remain available for local development, but they are not
+part of the default live chat path. Ollama model selection is no longer exposed in the UI.
+
+<!--
+Legacy setup retained for reference:
+
+1. Install Ollama: [ollama.com/download](https://ollama.com/download)
+
+2. Pull the models you want available:
    ```bash
    ollama pull gemma3:4b        # fast default
    ollama pull llama3.2:latest
@@ -55,14 +116,14 @@ instead of breaking, so this never takes down the rest of the site for a recruit
    works even if you skip this step** — it falls back to a plain keyword search — but real
    vector search gives noticeably better answers, so don't skip it for the live site.
 
-5. **Run the app**:
+5. Run the app:
    ```bash
    npm run dev
    ```
    Open the site, click the floating button bottom-right, and try one of the suggested
    questions.
 
-## 3. Updating what the assistant knows
+## Legacy updating notes
 
 Everything the assistant can talk about lives in `data/knowledge/*.md` — plain markdown, split
 into chunks on `## ` headings. To change what it knows:
@@ -80,7 +141,7 @@ that mixes three unrelated facts will retrieve worse than three focused sections
 UI uses. If you change a fact in `lib/constants.ts` (say, a new job), update the matching
 `data/knowledge/*.md` file too and re-run `kb:embed` — they don't sync automatically.
 
-## 4. How it works (architecture)
+## Legacy architecture
 
 ```
 User question
@@ -112,7 +173,7 @@ Client strips any [[action:...]] tokens from the reply and executes them
 Everything is server-rendered/streamed through the Next.js Route Handler at
 `app/api/chat/route.ts` — no API keys or model calls ever happen in the browser.
 
-## 5. Notes on scope
+## Legacy scope notes
 
 This is deliberately a focused first version: streaming chat, real RAG, portfolio navigation
 actions, model switching, conversation memory (multi-turn), markdown + syntax-highlighted code,
@@ -120,3 +181,4 @@ rate limiting, and graceful offline handling. Voice input/output, chat export, m
 reactions, and the other "bonus" ideas from the original brief aren't built yet — the
 architecture (separate `components/ai/`, `lib/ai/`, `hooks/`) leaves room to add them without
 restructuring anything.
+-->
