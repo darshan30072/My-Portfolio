@@ -13,7 +13,7 @@ export function SuggestedPrompts({ onSelect }: { onSelect: (prompt: string) => v
     <div className="flex h-full flex-col justify-end gap-4 px-1 pb-1">
       <div>
         <p className="font-display text-sm font-semibold text-foreground">
-          Hi, I&apos;m {SITE.name}&apos;s portfolio assistant ðŸ‘‹
+          Hi, I&apos;m {SITE.name}&apos;s portfolio AI assistant‹
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           Ask me about his experience, projects, skills, or resume â€” I only answer from his

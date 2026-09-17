@@ -21,6 +21,9 @@ export const EMBEDDING_MODEL =
 /** Gemini model used for production chat requests. */
 export const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
 
+/** Server-only Gemini API key used by the Google AI SDK provider. */
+export const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
 /** Keep Ollama embeddings opt-in so production does not depend on localhost. */
 export const USE_OLLAMA_EMBEDDINGS = process.env.USE_OLLAMA_EMBEDDINGS === "true";
 

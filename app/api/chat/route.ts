@@ -1,6 +1,6 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { google } from "@ai-sdk/google";
 import { GEMINI_MODEL, MAX_HISTORY_MESSAGES } from "@/lib/ai/config";
+import { gemini } from "@/lib/ai/provider";
 import { retrieveRelevantChunks } from "@/lib/ai/retriever";
 import { buildSystemPrompt } from "@/lib/ai/prompts";
 import { checkRateLimit, getClientKey } from "@/lib/security/rateLimit";
@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 
   try {
     const result = streamText({
-      model: google(GEMINI_MODEL),
+      model: gemini(GEMINI_MODEL),
       system,
       messages: await convertToModelMessages(trimmedMessages),
       abortSignal: request.signal,
