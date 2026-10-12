@@ -7,22 +7,23 @@ LinkedIn: https://www.linkedin.com/in/darshantandel002
 GitHub: https://github.com/darshantandel
 
 ## Professional summary
-Software Engineer with hands-on DevOps experience designing CI/CD pipelines, Docker
-containerization, automated Git-triggered deployments, and secure network infrastructure
-(Nginx, SSL/TLS, Cloudflare Tunnel, UFW), alongside full-stack development in React.js,
-Next.js, PHP, and WordPress. Skilled in GitHub Actions, self-hosted runners, and Linux server
-administration, with a track record of debugging complex production pipelines. Experienced in
-building local LLMs and Retrieval-Augmented Generation (RAG) systems with real-time streaming.
+Software Engineer with hands-on DevOps and CI/CD experience designing automated deployment
+pipelines, Docker-based containerization, and secure network infrastructure (Nginx, SSL/TLS,
+Cloudflare Tunnel, UFW), alongside full-stack development in React.js, Next.js, PHP, and
+WordPress. Skilled in GitHub Actions, self-hosted runners, and Linux server administration,
+with a track record of debugging complex production pipelines. Experienced in building local LLMs
+and Retrieval-Augmented Generation (RAG) systems with real-time streaming.
 
 ## Experience summary (most recent first)
+- Self-Employed — DevOps & CI/CD Engineer, Jun 2026 – Present.
 - Wappzo Infotech Private Limited — Frontend Developer (Intern -> Trainee -> Associate Engineer),
   Nov 2024 – Dec 2025.
-- Prologiciel Consulting — .NET Intern, Jan 2024 – Apr 2024.
+- Prologiciel Consulting — .NET Developer Intern, Dec 2023 – Apr 2024.
 
 ## Education summary
-- B.E. Computer Science, Mahatma Gandhi Institute of Technical Education & Research Center,
-  Navsari, 2021 – 2024.
-- Diploma in Information Technology, Dr. S. & S. S. Ghandhy College of Engineering & Technology,
+- B.E. in Computer Science, Mahatma Gandhi Institute of Technical Education, Navsari,
+  2021 – 2024.
+- Diploma in Information Technology, Dr. S. & S. S. Ghandhy College of Engineering,
   Surat, 2018 – 2021.
 
 ## Core technologies

@@ -15,7 +15,7 @@ Alongside product engineering, he builds AI systems using RAG, vector embeddings
 and local Ollama models.
 
 ## Quick facts
-- 13+ custom WordPress plugins shipped in production (Pushtimarg platform)
+- 3+ custom WordPress plugins shipped in production (Pushtimarg platform)
 - Automated GitHub Actions CI/CD with self-hosted Linux runners
 - Containerized multi-service applications with Docker Compose
 - Built zero-exposed-port deployment infrastructure using Cloudflare Tunnel and UFW
@@ -26,7 +26,7 @@ and local Ollama models.
 
 ## Why hire Darshan
 He has shipped real production systems across application development, infrastructure, and AI.
-The Pushtimarg platform demonstrates large-scale WordPress customization with 13+ plugins,
+The Pushtimarg platform demonstrates large-scale WordPress customization with 3+ plugins,
 a custom theme, multilingual functionality, LMS, polling, and OAuth. The FOP Admin project
 demonstrates production DevOps ownership through CI/CD, self-hosted runners, Docker Compose,
 Cloudflare Tunnel, Nginx, SSL/TLS, and firewall hardening. His portfolio itself demonstrates

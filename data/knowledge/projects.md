@@ -24,7 +24,7 @@ Tags: Next.js, TypeScript, RAG, Ollama, Vercel AI SDK.
 Live URL: https://my-portfolio.darshantech.online
 
 ## Pushtimarg Web Application
-A scalable WordPress platform featuring 13+ custom plugins and a custom theme, with an
+A scalable WordPress platform featuring 3+ custom plugins and a custom theme, with an
 English/Hindi translation system, LMS module, polling system, OAuth integrations, and REST APIs.
 Tags: WordPress, PHP, MySQL, JavaScript, REST APIs.
 Live URL: https://pushtimarg.wappzo.com

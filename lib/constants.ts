@@ -15,7 +15,7 @@ export const SITE = {
   name: "Darshan Tandel",
   title: "Darshan Tandel — Software Engineer",
   description:
-    "Software Engineer with hands-on DevOps experience building CI/CD pipelines, containerized applications, full-stack systems, and AI/RAG solutions. Based in Valsad, Gujarat, India.",
+    "Software Engineer with hands-on DevOps experience designing CI/CD pipelines, secure infrastructure, full-stack systems, and AI/RAG solutions. Based in Valsad, Gujarat, India.",
   url: "https://my-portfolio.darshantech.online",
   email: "tandeldarshan57@gmail.com",
   phone: "+91 63567 18644",
@@ -23,7 +23,7 @@ export const SITE = {
   openToWork: true,
   social: {
     linkedin: "https://www.linkedin.com/in/darshantandel002",
-    github: "https://github.com/darshan30072", // update with real URL
+    github: "https://github.com/darshan30072",
   },
   resume: "/resume.pdf",
 } as const;
@@ -44,7 +44,7 @@ export const HERO_ROLES = [
 ] as const;
 
 export const HERO_STATS = [
-  { value: "13+", label: "WordPress plugins shipped" },
+  { value: "3+", label: "Custom WordPress plugins" },
   { value: "CI/CD", label: "Production pipelines" },
   { value: "15+", label: "Interns mentored" },
   { value: "RAG", label: "AI pipeline built" },
@@ -53,15 +53,16 @@ export const HERO_STATS = [
 export const PROJECTS: readonly Project[] = [
   {
     id: "0",
-    title: "Pushtimarg Web Application",
-    kind: "Web Platform",
-    featured: false,
+    title: "FOP Admin — Food Ordering Platform Admin Dashboard",
+    kind: "Full-Stack Platform",
+    featured: true,
     description:
-      "Scalable WordPress platform featuring 13+ custom plugins and a custom theme, with an English/Hindi translation system, LMS module, polling system, OAuth integrations, and REST APIs.",
-    tags: ["WordPress", "PHP", "MySQL", "JavaScript", "REST APIs"],
-    liveUrl: "https://pushtimarg.wappzo.com",
-    image: "/images/projects/pushtimarg.webp",
-    metrics: ["13+ plugins", "Custom theme", "EN/HI engine"],
+      "Production food ordering admin dashboard with a GitHub Actions CI/CD pipeline on self-hosted Linux runners, Docker Compose multi-service deployment, Cloudflare Tunnel zero-exposed-port access, Nginx routing, SSL/TLS certificates, UFW firewall hardening, MongoDB, and Cloudinary.",
+    tags: ["Next.js", "TypeScript", "Docker", "GitHub Actions", "Nginx", "Cloudflare", "MongoDB", "Cloudinary"],
+    liveUrl: "https://fop-admin.darshantech.online",
+    githubUrl: "https://github.com/darshan30072/fop-admin.git",
+    image: "/images/projects/fop.webp",
+    metrics: ["CI/CD pipeline", "Self-hosted runner", "Zero exposed ports"],
   },
   {
     id: "1",
@@ -69,7 +70,7 @@ export const PROJECTS: readonly Project[] = [
     kind: "AI & RAG Platform",
     featured: true,
     description:
-      "AI-powered portfolio with a production RAG pipeline using Markdown chunking, local vector embeddings, cosine similarity, and self-hosted Ollama models, plus a streaming chat UI with Vercel AI SDK and secure portfolio navigation actions.",
+      "AI-powered portfolio with a zero-external-cost production RAG pipeline using markdown chunking, local vector embeddings, cosine similarity, and self-hosted Ollama LLMs, plus a streaming chat UI with Vercel AI SDK and secure navigation actions.",
     tags: ["Next.js", "TypeScript", "RAG", "Ollama", "Vercel AI SDK"],
     liveUrl: "https://my-portfolio.darshantech.online",
     githubUrl: "https://github.com/darshan30072/My-Portfolio.git",
@@ -78,20 +79,33 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     id: "2",
-    title: "FOP Admin — Food Ordering Platform Admin Dashboard",
-    kind: "Full-Stack Platform",
-    featured: true,
+    title: "Pushtimarg Web Application",
+    kind: "Web Platform",
+    featured: false,
     description:
-      "Production food ordering admin dashboard with an automated GitHub Actions CI/CD pipeline, self-hosted Linux runners, Docker Compose, Cloudflare Tunnel, Nginx, SSL/TLS, UFW hardening, MongoDB, and Cloudinary.",
-    tags: ["Next.js", "TypeScript", "Docker", "GitHub Actions", "Nginx", "Cloudflare", "MongoDB", "Cloudinary"],
-    liveUrl: "https://fop-admin.darshantech.online",
-    githubUrl: "https://github.com/darshan30072/fop-admin.git",
-    image: "/images/projects/fop.webp",
-    metrics: ["CI/CD pipeline", "Self-hosted runner", "Zero exposed ports"],
+      "Scalable WordPress platform featuring 3+ custom plugins and a custom theme, with an English/Hindi translation system, LMS module, and OAuth integrations.",
+    tags: ["WordPress", "PHP", "MySQL", "JavaScript", "REST APIs"],
+    liveUrl: "https://pushtimarg.wappzo.com",
+    image: "/images/projects/pushtimarg.webp",
+    metrics: ["3+ plugins", "Custom theme", "EN/HI engine"],
   },
 ] as const;
 
 export const EXPERIENCE = [
+  {
+    id: "self-employed",
+    role: "DevOps & CI/CD Engineer",
+    company: "Self-Employed",
+    period: "Jun 2026 – Present",
+    progression: null,
+    bullets: [
+      "Designed and implemented automated GitHub Actions CI/CD workflows using self-hosted Linux runners for multi-service production environments.",
+      "Containerized full-stack stacks (Node.js, Next.js, MongoDB) using Docker and Docker Compose to ensure consistent, reproducible deployments.",
+      "Debugged and resolved complex pipeline issues including npm cache bottlenecks, cross-platform lockfile conflicts, and runner time synchronization/clock drift problems.",
+      "Configured secure zero-exposed-port infrastructure with Cloudflare Tunnel, Nginx reverse proxy, SSL/TLS certificates, and UFW firewall rules.",
+      "Automated lint-gated testing and continuous delivery pipelines to Vercel and Linux VMs to enforce quality and zero-downtime releases.",
+    ],
+  },
   {
     id: "wappzo",
     role: "Frontend Developer",
@@ -99,20 +113,21 @@ export const EXPERIENCE = [
     period: "Nov 2024 – Dec 2025",
     progression: ["Intern", "Trainee", "Associate Engineer"],
     bullets: [
-      "Built 10+ reusable React.js components using Hooks and props-driven design, integrating with REST APIs; debugged data-format mismatches between frontend and backend.",
+      "Built 10+ reusable React.js components using Hooks and props-driven design, integrating with REST APIs to render dynamic data and resolve frontend-backend data-format mismatches.",
       "Translated UI requirements into responsive, cross-browser interfaces across 10+ pages using React.js, Next.js, and modern CSS (Flexbox, Grid, Tailwind, Bootstrap).",
-      "Architected and shipped 13 custom WordPress plugins and a custom theme, including a from-scratch English/Hindi translation engine, course platform with quiz & progress endpoints, multilingual polling, and OAuth (Google, Facebook, Microsoft).",
-      "Mentored 15+ onboarding interns through HTML, CSS, and JavaScript code reviews.",
+      "Built backend features in PHP and MySQL, including server-side logic, optimized database queries, and REST API endpoints, and integrated them with frontend applications.",
+      "Architected and shipped 3+ custom WordPress plugins and a custom theme, featuring an English/Hindi translation engine, LMS module, polling system, and multi-provider OAuth login.",
+      "Mentored 15+ onboarding interns through HTML, CSS, and JavaScript code reviews while delivering core daily engineering tasks.",
     ],
   },
   {
     id: "prologiciel",
-    role: ".NET Intern",
+    role: ".NET Developer Intern",
     company: "Prologiciel Consulting",
-    period: "Jan 2024 – Apr 2024",
+    period: "Dec 2023 – Apr 2024",
     progression: null,
     bullets: [
-      "Built a full-stack task management app in ASP.NET Core (Razor Pages) and C#, implementing complete CRUD against SQL Server using parameterized ADO.NET queries to prevent SQL injection.",
+      "Built a full-stack task management app in ASP.NET Core (Razor Pages) and C#, implementing CRUD operations against SQL Server via parameterized ADO.NET queries to prevent SQL injection.",
     ],
   },
 ] as const;
@@ -176,20 +191,20 @@ export const SKILLS = [
 
 export const EDUCATION = [
   {
-    degree: "Bachelor of Engineering, Computer Science",
-    school: "Mahatma Gandhi Institute of Technical Education & Research Center, Navsari",
-    period: "Aug 2021 – May 2024",
+    degree: "B.E. in Computer Science",
+    school: "Mahatma Gandhi Institute of Tech. Education, Navsari, India",
+    period: "2021 – 2024",
   },
   {
     degree: "Diploma in Information Technology",
-    school: "Dr. S. & S. S. Ghandhy College of Engg. & Tech., Surat",
-    period: "Jun 2018 – May 2021",
+    school: "Dr. S. & S. S. Ghandhy College of Engg., Surat, India",
+    period: "2018 – 2021",
   },
 ] as const;
 
 export const CERTIFICATIONS = [
   {
-    title: "AI Engineer Core Track: LLM Engineering, RAG, QLoRA & Agents",
+    title: "AI Engineer Core Track — LLM Engineering, RAG, QLoRA & Agents",
     issuer: "Udemy",
   },
 ] as const;
