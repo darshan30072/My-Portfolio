@@ -14,6 +14,7 @@ export function ChatWindow({
   messages,
   status,
   hasError,
+  errorMessage,
   online,
   inputValue,
   onInputChange,
@@ -28,6 +29,7 @@ export function ChatWindow({
   messages: UIMessage[];
   status: Status;
   hasError: boolean;
+  errorMessage?: string;
   online: boolean;
   inputValue: string;
   onInputChange: (value: string) => void;
@@ -61,7 +63,13 @@ export function ChatWindow({
 
       <MessageList messages={messages} status={status} onSuggestedSelect={onSuggestedSelect} />
 
-      {hasError && <ErrorBanner onRetry={onRetry} onDismiss={onDismissError} />}
+      {hasError && (
+        <ErrorBanner
+          message={errorMessage}
+          onRetry={onRetry}
+          onDismiss={onDismissError}
+        />
+      )}
 
       <MessageInput
         value={inputValue}

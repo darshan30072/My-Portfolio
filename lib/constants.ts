@@ -52,6 +52,18 @@ export const HERO_STATS = [
 
 export const PROJECTS: readonly Project[] = [
   {
+    id: "2",
+    title: "Pushtimarg Web Application",
+    kind: "Web Platform",
+    featured: false,
+    description:
+      "Scalable WordPress platform featuring 3+ custom plugins and a custom theme, with an English/Hindi translation system, LMS module, and OAuth integrations.",
+    tags: ["WordPress", "PHP", "MySQL", "JavaScript", "REST APIs"],
+    liveUrl: "https://pushtimarg.wappzo.com",
+    image: "/images/projects/pushtimarg.webp",
+    metrics: ["3+ plugins", "Custom theme", "EN/HI engine"],
+  },
+  {
     id: "0",
     title: "FOP Admin — Food Ordering Platform Admin Dashboard",
     kind: "Full-Stack Platform",
@@ -76,18 +88,6 @@ export const PROJECTS: readonly Project[] = [
     githubUrl: "https://github.com/darshan30072/My-Portfolio.git",
     image: "/images/projects/ai-portfolio-assistant.gif",
     metrics: ["RAG pipeline", "Streaming chat", "Vercel CI/CD"],
-  },
-  {
-    id: "2",
-    title: "Pushtimarg Web Application",
-    kind: "Web Platform",
-    featured: false,
-    description:
-      "Scalable WordPress platform featuring 3+ custom plugins and a custom theme, with an English/Hindi translation system, LMS module, and OAuth integrations.",
-    tags: ["WordPress", "PHP", "MySQL", "JavaScript", "REST APIs"],
-    liveUrl: "https://pushtimarg.wappzo.com",
-    image: "/images/projects/pushtimarg.webp",
-    metrics: ["3+ plugins", "Custom theme", "EN/HI engine"],
   },
 ] as const;
 

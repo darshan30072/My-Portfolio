@@ -1,5 +1,5 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { GEMINI_MODEL, MAX_HISTORY_MESSAGES } from "@/lib/ai/config";
+import { GEMINI_API_KEY, GEMINI_MODEL, MAX_HISTORY_MESSAGES } from "@/lib/ai/config";
 import { gemini } from "@/lib/ai/provider";
 import { retrieveRelevantChunks } from "@/lib/ai/retriever";
 import { buildSystemPrompt } from "@/lib/ai/prompts";
@@ -16,6 +16,22 @@ function lastUserMessageText(messages: UIMessage[]): string {
     .filter((p): p is { type: "text"; text: string } => p.type === "text")
     .map((p) => p.text)
     .join(" ");
+}
+
+function getProviderErrorMessage(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error);
+
+  if (/api.?key|unauthenticated|invalid.?key|\b(401|403)\b/i.test(message)) {
+    return "Gemini rejected its API key. The site owner should check GEMINI_API_KEY in Vercel's Production environment.";
+  }
+  if (/quota|rate.?limit|resource_exhausted|\b429\b/i.test(message)) {
+    return "Gemini's API quota or rate limit was reached. The site owner should check Google AI Studio usage and billing.";
+  }
+  if (/model.{0,30}(not found|unsupported)|\b404\b/i.test(message)) {
+    return "The configured Gemini model is unavailable. The site owner should check GEMINI_MODEL in Vercel.";
+  }
+
+  return "The AI service failed while generating a reply. Please retry later; if the issue continues, the site owner should check the Vercel Function Logs.";
 }
 
 export async function POST(request: Request) {
@@ -47,6 +63,16 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!GEMINI_API_KEY?.trim()) {
+    return Response.json(
+      {
+        error:
+          "The AI assistant is not configured. The site owner must add GEMINI_API_KEY to Vercel's Production environment and redeploy.",
+      },
+      { status: 503 }
+    );
+  }
+
   const { messages } = parsed.data;
 
   // Bound both the token cost and the prompt-injection surface of long histories.
@@ -68,8 +94,7 @@ export async function POST(request: Request) {
       },
     });
     return result.toUIMessageStreamResponse({
-      onError: () =>
-        "The AI assistant is temporarily unavailable. Please try again shortly, or reach out to Darshan directly.",
+      onError: getProviderErrorMessage,
     });
   } catch (err) {
     console.error("[api/chat] Unexpected error:", err);

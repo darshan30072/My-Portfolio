@@ -66,6 +66,7 @@ export function ChatWidget() {
             messages={messages}
             status={status}
             hasError={Boolean(error)}
+            errorMessage={error?.message}
             online
             inputValue={input}
             onInputChange={setInput}

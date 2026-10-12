@@ -1,17 +1,27 @@
 import { AlertTriangle, RotateCcw, X } from "lucide-react";
 
 export function ErrorBanner({
+  message,
   onRetry,
   onDismiss,
 }: {
+  message?: string;
   onRetry: () => void;
   onDismiss: () => void;
 }) {
+  let displayMessage = message || "Something went wrong sending that message.";
+  try {
+    const parsed = JSON.parse(displayMessage) as { error?: unknown };
+    if (typeof parsed.error === "string") displayMessage = parsed.error;
+  } catch {
+    // Stream errors are plain text; only parse JSON error responses.
+  }
+
   return (
     <div className="mx-3 mb-2 flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-foreground">
       <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-destructive" />
       <p className="flex-1 leading-relaxed">
-        Something went wrong sending that message.
+        {displayMessage}
       </p>
       <button
         type="button"

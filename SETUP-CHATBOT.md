@@ -14,6 +14,9 @@ GEMINI_API_KEY=your_google_ai_studio_key
 
 In Vercel, add `GEMINI_API_KEY` under **Project Settings → Environment Variables** for Production,
 then redeploy. The key is used only by the server route and is never sent to the browser.
+If the chat reports that the key is missing or rejected, verify that the variable is enabled for
+Production and redeploy after saving it. Check the Vercel Function Logs for provider errors such as
+an invalid key, exhausted quota, or an unavailable model.
 
 The default model is `gemini-2.5-flash`. To override it, add:
 
