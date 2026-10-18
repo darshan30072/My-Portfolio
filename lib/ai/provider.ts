@@ -1,10 +1,5 @@
 import { createOllama } from "ollama-ai-provider-v2";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { GEMINI_API_KEY, OLLAMA_API_KEY, OLLAMA_BASE_URL } from "./config";
-
-export const gemini = createGoogleGenerativeAI({
-  apiKey: GEMINI_API_KEY,
-});
+import { OLLAMA_API_KEY, OLLAMA_BASE_URL } from "./config";
 
 /**
  * One shared provider instance so every part of the app (chat streaming,

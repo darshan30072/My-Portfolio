@@ -6,11 +6,15 @@ import { ModelSelector } from "./ModelSelector";
 
 export function ChatHeader({
   online,
+  model,
+  onModelChange,
   onClear,
   onClose,
   canClear,
 }: {
   online: boolean;
+  model: string;
+  onModelChange: (id: string) => void;
   onClear: () => void;
   onClose: () => void;
   canClear: boolean;
@@ -33,13 +37,13 @@ export function ChatHeader({
             Portfolio Assistant
           </p>
           <p className="truncate text-[11px] text-muted-foreground">
-            {online ? "Online · Gemini AI" : "Assistant offline"}
+            {online ? "Online · local AI" : "Assistant offline"}
           </p>
         </div>
       </div>
 
       <div className="flex shrink-0 items-center gap-1">
-        <ModelSelector />
+        <ModelSelector value={model} onChange={onModelChange} />
         <button
           type="button"
           onClick={onClear}
