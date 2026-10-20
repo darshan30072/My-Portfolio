@@ -1,4 +1,4 @@
-import { OLLAMA_BASE_URL } from "@/lib/ai/config";
+import { OLLAMA_API_KEY, OLLAMA_BASE_URL } from "@/lib/ai/config";
 
 export async function GET() {
   const controller = new AbortController();
@@ -6,6 +6,9 @@ export async function GET() {
 
   try {
     const res = await fetch(`${OLLAMA_BASE_URL}/tags`, {
+      headers: OLLAMA_API_KEY
+        ? { Authorization: `Bearer ${OLLAMA_API_KEY}` }
+        : undefined,
       signal: controller.signal,
       cache: "no-store",
     });
