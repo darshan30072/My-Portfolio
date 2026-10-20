@@ -7,9 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { ChatButton } from "./ChatButton";
 import { ChatWindow } from "./ChatWindow";
 import { Toast } from "./Toast";
-import { useOllamaHealth } from "@/hooks/useOllamaHealth";
 import { usePortfolioActions } from "@/hooks/usePortfolioActions";
-import { DEFAULT_CHAT_MODEL } from "@/lib/ai/config";
 
 // Stable across renders — per-message model selection is passed via
 // sendMessage's request `body` instead of recreating the transport.
@@ -17,12 +15,9 @@ const transport = new DefaultChatTransport({ api: "/api/chat" });
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [model, setModel] = useState(DEFAULT_CHAT_MODEL);
   const [input, setInput] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const health = useOllamaHealth(isOpen);
 
   const { messages, sendMessage, status, error, regenerate, stop, clearError, setMessages } =
     useChat({ transport });
@@ -40,7 +35,7 @@ export function ChatWidget() {
   function send(text: string) {
     const trimmed = text.trim();
     if (!trimmed) return;
-    void sendMessage({ text: trimmed }, { body: { model } });
+    void sendMessage({ text: trimmed });
   }
 
   function handleSubmit() {
@@ -54,7 +49,7 @@ export function ChatWidget() {
   }
 
   function handleRetry() {
-    void regenerate({ body: { model } });
+    void regenerate();
   }
 
   return (
@@ -72,9 +67,6 @@ export function ChatWidget() {
             status={status}
             hasError={Boolean(error)}
             errorMessage={error?.message}
-            online={health.online}
-            model={model}
-            onModelChange={setModel}
             inputValue={input}
             onInputChange={setInput}
             onSubmit={handleSubmit}

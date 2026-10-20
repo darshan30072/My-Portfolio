@@ -6,7 +6,6 @@ import { ChatHeader } from "./ChatHeader";
 import { MessageList } from "./MessageList";
 import { MessageInput } from "./MessageInput";
 import { ErrorBanner } from "./ErrorBanner";
-import { OfflineNotice } from "./OfflineNotice";
 
 type Status = "submitted" | "streaming" | "ready" | "error";
 
@@ -15,9 +14,6 @@ export function ChatWindow({
   status,
   hasError,
   errorMessage,
-  online,
-  model,
-  onModelChange,
   inputValue,
   onInputChange,
   onSubmit,
@@ -32,9 +28,6 @@ export function ChatWindow({
   status: Status;
   hasError: boolean;
   errorMessage?: string;
-  online: boolean;
-  model: string;
-  onModelChange: (id: string) => void;
   inputValue: string;
   onInputChange: (value: string) => void;
   onSubmit: () => void;
@@ -57,15 +50,10 @@ export function ChatWindow({
       className="glass fixed inset-x-3 bottom-24 z-[60] flex h-[min(34rem,calc(100vh-8rem))] flex-col overflow-hidden rounded-2xl shadow-2xl sm:inset-x-auto sm:bottom-24 sm:right-6 sm:w-[23rem]"
     >
       <ChatHeader
-        online={online}
-        model={model}
-        onModelChange={onModelChange}
         onClear={onClear}
         onClose={onClose}
         canClear={messages.length > 0}
       />
-
-      {!online && <OfflineNotice />}
 
       <MessageList messages={messages} status={status} onSuggestedSelect={onSuggestedSelect} />
 

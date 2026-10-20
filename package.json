@@ -10,6 +10,7 @@
     "kb:embed": "node scripts/generate-embeddings.mjs"
   },
   "dependencies": {
+    "@ai-sdk/google": "4.0.64",
     "@ai-sdk/react": "^4.0.50",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-slot": "^1.1.1",

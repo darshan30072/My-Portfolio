@@ -1,63 +1,49 @@
-# AI Portfolio Assistant — Setup Guide
+# AI Portfolio Assistant Setup
 
-A RAG-powered chat widget that answers recruiter questions about Darshan using his portfolio
-data. Chat generation and vector retrieval use local Ollama models.
+The portfolio chatbot uses Gemini Flash for generation. It runs through the Next.js API route,
+so the Gemini key remains on the server and the Vercel deployment does not need an Ollama host.
 
-## Important: Vercel hosting
+## 1. Get a Gemini API key
 
-Ollama runs as a server on a machine you control. A Vercel deployment cannot reach Ollama on your
-personal computer at `127.0.0.1`; that address refers to the Vercel instance itself. Local models
-work when the Next.js server and Ollama run on the same machine. For the hosted site, Ollama must
-run on an always-on server reachable through a secured URL, and `OLLAMA_BASE_URL` must point to
-that server. Do not expose an unauthenticated Ollama API to the public internet.
+Create an API key in [Google AI Studio](https://aistudio.google.com/app/apikey). Treat it like a
+password. Do not add it to client-side code, commit it, or name it with a `NEXT_PUBLIC_` prefix.
 
-## 1. Install and download models
+For local development, put it in the ignored `.env.local` file:
 
-Install [Ollama](https://ollama.com/download), then pull the models you want to use:
-
-```bash
-ollama pull gemma3:1b
-ollama pull gemma3:4b
-ollama pull llama3.2:latest
-ollama pull qwen2.5:latest
-ollama pull gpt-oss:20b
-ollama pull nomic-embed-text
+```env
+GEMINI_API_KEY=your_key_from_google_ai_studio
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-Only keep models in `CHAT_MODELS` in `lib/ai/config.ts` if they have been pulled on the Ollama
-server.
+`GEMINI_MODEL` is optional; the app defaults to `gemini-2.5-flash`.
 
-## 2. Configure environment
+## 2. Add the key to Vercel
 
-Copy `.env.example` to `.env.local`. The defaults work when Next.js and Ollama run on the same
-machine. Set `OLLAMA_BASE_URL` to the secured remote Ollama URL when they run on different
-machines. Set `OLLAMA_API_KEY` if that endpoint requires bearer-token authentication.
+1. Open the Vercel dashboard and select the project that deploys this portfolio.
+2. Go to **Settings → Environment Variables**.
+3. Add a variable named exactly `GEMINI_API_KEY` and paste the key as its value.
+4. Select **Production**. Also select Preview or Development if those deployments should use Gemini.
+5. Save the variable. Do not include quotes or a `NEXT_PUBLIC_` prefix.
 
-`OLLAMA_DEFAULT_MODEL` must match one of the pulled chat model IDs. `OLLAMA_EMBED_MODEL` must
-match the embedding model used by the knowledge-base file.
+Vercel environment-variable changes apply to new deployments. Trigger a new production deployment
+after saving: push a commit to the configured production branch, or redeploy the latest deployment.
 
-## 3. Generate embeddings and run locally
+## 3. Verify the deployment
 
-Start Ollama, generate the knowledge embeddings, then start Next.js:
+Open the deployed site and send a short test prompt in the chatbot. A missing key returns an HTTP
+503 response explaining that `GEMINI_API_KEY` is not configured. A streamed HTTP 200 alone does
+not prove that Gemini answered: streaming can start before Gemini returns an error. If the widget
+shows an error, inspect the failed function invocation under **Vercel → Project → Logs** and check
+that the key is valid, enabled for the Production environment, and that the configured model is
+available to your Google AI Studio account.
 
-```bash
-ollama serve
-npm run kb:embed
-npm run dev
-```
+## Retrieval and Ollama
 
-If the embeddings file is missing, stale, or the Ollama embedding endpoint is unavailable, the
-retriever falls back to keyword search.
+By default, retrieval searches the portfolio's `data/knowledge/*.md` files using keyword matching,
+so production chat does not need Ollama. Ollama vector embeddings are optional for local use and
+can be enabled with `USE_OLLAMA_EMBEDDINGS=true` only when the server can reach Ollama at
+`OLLAMA_BASE_URL`.
 
-## 4. Update the assistant's knowledge
-
-Knowledge content lives in `data/knowledge/*.md` and is split on `## ` headings. Edit the
-relevant file and rerun `npm run kb:embed` to regenerate vector embeddings. The knowledge files
-are separate from the structured page data in `lib/constants.ts`, so update both when facts
-change.
-
-## How it works
-
-The chat route validates and rate-limits requests, retrieves relevant knowledge chunks, builds a
-system prompt, and streams a reply from the selected Ollama model. All model calls happen on the
-server; the browser never receives model credentials.
+To update what the assistant knows, edit the Markdown files in `data/knowledge/` and redeploy. The
+knowledge files are separate from the structured page data in `lib/constants.ts`, so update both
+when a portfolio fact changes.

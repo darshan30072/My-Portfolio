@@ -1,13 +1,8 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { ollama } from "@/lib/ai/provider";
-import { CONTEXT_WINDOW } from "@/lib/ai/config";
+import { GEMINI_API_KEY, GEMINI_MODEL, MAX_HISTORY_MESSAGES } from "@/lib/ai/config";
+import { gemini } from "@/lib/ai/provider";
 import { retrieveRelevantChunks } from "@/lib/ai/retriever";
 import { buildSystemPrompt } from "@/lib/ai/prompts";
-import {
-  DEFAULT_CHAT_MODEL,
-  MAX_HISTORY_MESSAGES,
-  isAllowedModel,
-} from "@/lib/ai/config";
 import { checkRateLimit, getClientKey } from "@/lib/security/rateLimit";
 import { chatRequestSchema } from "@/lib/security/validate";
 
@@ -26,14 +21,16 @@ function lastUserMessageText(messages: UIMessage[]): string {
 function getProviderErrorMessage(error: unknown): string {
   const message = error instanceof Error ? error.message : String(error);
 
-  if (/ECONNREFUSED|fetch failed|connect.*refused/i.test(message)) {
-    return "Ollama is unreachable. Check that it is running and that OLLAMA_BASE_URL points to the Ollama server.";
+  if (/api.?key|unauthenticated|invalid.?key|\b(401|403)\b/i.test(message)) {
+    return "Gemini rejected its API key. Check GEMINI_API_KEY in Vercel's Production environment.";
   }
-  if (/model.{0,30}(not found|does not exist)|\b404\b/i.test(message)) {
-    return "The selected Ollama model is not installed. Pull it with `ollama pull <model>` and try again.";
+  if (/quota|rate.?limit|resource_exhausted|\b429\b/i.test(message)) {
+    return "Gemini's API quota or rate limit was reached. Check Google AI Studio usage and billing.";
   }
-
-  return "Ollama could not generate a reply. Check the Ollama server logs and try again.";
+  if (/model.{0,30}(not found|unsupported)|\b404\b/i.test(message)) {
+    return "The configured Gemini model is unavailable. Check GEMINI_MODEL in Vercel.";
+  }
+  return "Gemini could not generate a reply. Please retry later; check the Vercel Function Logs if the issue continues.";
 }
 
 export async function POST(request: Request) {
@@ -65,8 +62,17 @@ export async function POST(request: Request) {
     );
   }
 
-  const { messages, model: requestedModel } = parsed.data;
-  const model = isAllowedModel(requestedModel) ? requestedModel : DEFAULT_CHAT_MODEL;
+  if (!GEMINI_API_KEY?.trim()) {
+    return Response.json(
+      {
+        error:
+          "The AI assistant is not configured. For local development, add GEMINI_API_KEY to .env.local and restart the dev server. For production, add it to Vercel's Production environment and redeploy.",
+      },
+      { status: 503 }
+    );
+  }
+
+  const { messages } = parsed.data;
 
   // Bound both the token cost and the prompt-injection surface of long histories.
   const trimmedMessages = messages.slice(-MAX_HISTORY_MESSAGES) as UIMessage[];
@@ -77,16 +83,11 @@ export async function POST(request: Request) {
 
   try {
     const result = streamText({
-      model: ollama(model),
+      model: gemini(GEMINI_MODEL),
       system,
       messages: await convertToModelMessages(trimmedMessages),
       abortSignal: request.signal,
       temperature: 0.4,
-      providerOptions: {
-        ollama: {
-          options: { num_ctx: CONTEXT_WINDOW },
-        },
-      },
       onError({ error }) {
         console.error("[api/chat] streamText error:", error);
       },
