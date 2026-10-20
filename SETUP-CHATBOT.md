@@ -12,10 +12,10 @@ For local development, put it in the ignored `.env.local` file:
 
 ```env
 GEMINI_API_KEY=your_key_from_google_ai_studio
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.8-flash
 ```
 
-`GEMINI_MODEL` is optional; the app defaults to `gemini-2.5-flash`.
+`GEMINI_MODEL` is optional; the app defaults to `gemini-3.8-flash`.
 
 ## 2. Add the key to Vercel
 

@@ -19,7 +19,7 @@ export const EMBEDDING_MODEL =
   process.env.OLLAMA_EMBED_MODEL ?? "nomic-embed-text";
 
 /** Gemini model used for chat generation. */
-export const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+export const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
 
 /** Server-side API key; never expose this through a NEXT_PUBLIC_ variable. */
 export const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
