@@ -48,7 +48,7 @@ export function About() {
               <p>
                 At Wappzo Infotech I progressed from intern to Trainee and Associate
                 Engineer, building reusable React.js interfaces, REST API integrations,
-                and 13 custom WordPress plugins with multilingual, LMS, polling, and
+                and 3+ custom WordPress plugins with multilingual, LMS, polling, and
                 OAuth capabilities.
               </p>
               <p>
