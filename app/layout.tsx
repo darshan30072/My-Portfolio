@@ -6,6 +6,7 @@ import { SITE } from "@/lib/constants";
 import "./globals.css";
 import AnimatedBackground from "@/components/background/AnimatedBackground";
 import { ChatWidget } from "@/components/ai/ChatWidget";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -115,6 +116,7 @@ export default function RootLayout({
           <main id="main">{children}</main>
           <ChatWidget />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
