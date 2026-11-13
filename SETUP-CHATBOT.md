@@ -1,49 +1,42 @@
 # AI Portfolio Assistant Setup
 
-The portfolio chatbot uses Gemini Flash for generation. It runs through the Next.js API route,
-so the Gemini key remains on the server and the Vercel deployment does not need an Ollama host.
+The chatbot uses local Ollama models for generation and, when an embeddings file is available,
+vector retrieval.
 
-## 1. Get a Gemini API key
+## Local development
 
-Create an API key in [Google AI Studio](https://aistudio.google.com/app/apikey). Treat it like a
-password. Do not add it to client-side code, commit it, or name it with a `NEXT_PUBLIC_` prefix.
+1. Install Ollama from [ollama.com/download](https://ollama.com/download).
+2. Pull the models configured in `lib/ai/config.ts`, plus the embedding model:
 
-For local development, put it in the ignored `.env.local` file:
+	```bash
+	ollama pull gemma3:1b
+	ollama pull gemma3:4b
+	ollama pull llama3.2:latest
+	ollama pull qwen2.5:latest
+	ollama pull gpt-oss:20b
+	ollama pull nomic-embed-text
+	```
 
-```env
-GEMINI_API_KEY=your_key_from_google_ai_studio
-GEMINI_MODEL=gemini-3.8-flash
-```
+3. Keep `OLLAMA_BASE_URL=http://127.0.0.1:11434/api` in `.env.local` when Ollama and Next.js
+	are running on the same machine. Set `OLLAMA_DEFAULT_MODEL` to a model pulled in Ollama.
+4. Start Ollama and Next.js:
 
-`GEMINI_MODEL` is optional; the app defaults to `gemini-3.8-flash`.
+	```bash
+	ollama serve
+	npm run dev
+	```
 
-## 2. Add the key to Vercel
+To enable vector retrieval, run `npm run kb:embed` while Ollama is running. If embeddings are
+missing or Ollama's embedding endpoint is unavailable, the retriever falls back to keyword search.
 
-1. Open the Vercel dashboard and select the project that deploys this portfolio.
-2. Go to **Settings → Environment Variables**.
-3. Add a variable named exactly `GEMINI_API_KEY` and paste the key as its value.
-4. Select **Production**. Also select Preview or Development if those deployments should use Gemini.
-5. Save the variable. Do not include quotes or a `NEXT_PUBLIC_` prefix.
+## Hosting on Vercel
 
-Vercel environment-variable changes apply to new deployments. Trigger a new production deployment
-after saving: push a commit to the configured production branch, or redeploy the latest deployment.
+Ollama does not run inside Vercel's serverless functions. For a live Vercel chatbot, run Ollama on
+an always-on server that Vercel can reach over HTTPS. Configure `OLLAMA_BASE_URL` in the Vercel
+project to the server's Ollama API root, including `/api`, and set `OLLAMA_API_KEY` if the secured
+endpoint requires bearer-token authentication. The health check uses the same token. Never expose
+an unauthenticated Ollama API to the public internet. After configuring the variables, redeploy.
 
-## 3. Verify the deployment
-
-Open the deployed site and send a short test prompt in the chatbot. A missing key returns an HTTP
-503 response explaining that `GEMINI_API_KEY` is not configured. A streamed HTTP 200 alone does
-not prove that Gemini answered: streaming can start before Gemini returns an error. If the widget
-shows an error, inspect the failed function invocation under **Vercel → Project → Logs** and check
-that the key is valid, enabled for the Production environment, and that the configured model is
-available to your Google AI Studio account.
-
-## Retrieval and Ollama
-
-By default, retrieval searches the portfolio's `data/knowledge/*.md` files using keyword matching,
-so production chat does not need Ollama. Ollama vector embeddings are optional for local use and
-can be enabled with `USE_OLLAMA_EMBEDDINGS=true` only when the server can reach Ollama at
-`OLLAMA_BASE_URL`.
-
-To update what the assistant knows, edit the Markdown files in `data/knowledge/` and redeploy. The
-knowledge files are separate from the structured page data in `lib/constants.ts`, so update both
-when a portfolio fact changes.
+To update what the assistant knows, edit `data/knowledge/*.md` and regenerate embeddings with
+`npm run kb:embed`. These files are separate from `lib/constants.ts`, so keep both in sync when
+portfolio facts change.
