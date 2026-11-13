@@ -18,14 +18,26 @@ export const CONTEXT_WINDOW = 4096;
 export const EMBEDDING_MODEL =
   process.env.OLLAMA_EMBED_MODEL ?? "nomic-embed-text";
 
-/** Gemini model used for chat generation. */
-export const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
+export type ChatModelOption = {
+  id: string;
+  label: string;
+  description: string;
+};
 
-/** Server-side API key; never expose this through a NEXT_PUBLIC_ variable. */
-export const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+export const CHAT_MODELS: ChatModelOption[] = [
+  { id: "gemma3:1b", label: "Gemma 3 (1B)", description: "Fast, compact model" },
+  { id: "gemma3:4b", label: "Gemma 3 (4B)", description: "Good default for quick answers" },
+  { id: "llama3.2:latest", label: "Llama 3.2", description: "Balanced speed and quality" },
+  { id: "qwen2.5:latest", label: "Qwen 2.5", description: "Strong reasoning, still fairly fast" },
+  { id: "gpt-oss:20b", label: "GPT-OSS (20B)", description: "Larger model; slower on modest hardware" },
+];
 
-/** Ollama embeddings are optional; production defaults to keyword retrieval. */
-export const USE_OLLAMA_EMBEDDINGS = process.env.USE_OLLAMA_EMBEDDINGS === "true";
+export const DEFAULT_CHAT_MODEL =
+  process.env.OLLAMA_DEFAULT_MODEL ?? CHAT_MODELS[0].id;
+
+export function isAllowedModel(id: unknown): id is string {
+  return typeof id === "string" && CHAT_MODELS.some((model) => model.id === id);
+}
 
 /** How many knowledge chunks to feed the model per question. */
 export const RETRIEVAL_TOP_K = 5;
